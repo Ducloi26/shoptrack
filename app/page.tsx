@@ -190,7 +190,7 @@ export default function HomePage() {
       <main className="page-main" id="main-content">
         
         {/* ── Tabs Navigation ── */}
-        <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', marginBottom: '20px', paddingBottom: '2px', gap: '12px' }}>
+        <div className="nav-tabs" style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', marginBottom: '20px', paddingBottom: '2px', gap: '12px' }}>
           <button
             onClick={() => setActiveTab('orders')}
             className={`filter-tab ${activeTab === 'orders' ? 'active' : ''}`}
