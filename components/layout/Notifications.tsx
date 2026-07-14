@@ -117,7 +117,7 @@ export function Notifications({ orders }: NotificationsProps) {
           id: notifId,
           title: `Đơn ${order.tracking_code} - ${statusLabel}`,
           body: `${statusIcon} ${lastEvent.description} ${lastEvent.location ? ` tại ${lastEvent.location}` : ''}`,
-          time: new Date(order.updated_at),
+          time: new Date(lastEvent.time),
           read: readIds.includes(notifId),
         });
       }
@@ -267,7 +267,7 @@ export function Notifications({ orders }: NotificationsProps) {
                     {notif.body}
                   </p>
                   <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', display: 'block', marginTop: '4px' }}>
-                    {notif.time.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
+                    {notif.time.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })} {notif.time.getDate().toString().padStart(2, '0')}-{(notif.time.getMonth() + 1).toString().padStart(2, '0')}
                   </span>
                 </div>
               ))
