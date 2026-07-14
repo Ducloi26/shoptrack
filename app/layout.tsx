@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   keywords: 'theo dõi đơn hàng, tracking, shopee express, GHN, vận chuyển, SPX',
   authors: [{ name: 'ShopTrack' }],
   robots: 'index, follow',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'ShopTrack',
+  },
   openGraph: {
     title: 'ShopTrack — Theo dõi đơn hàng thông minh',
     description: 'Theo dõi tự động đơn hàng từ nhiều đơn vị vận chuyển tại Việt Nam',

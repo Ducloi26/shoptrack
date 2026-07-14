@@ -1,0 +1,22 @@
+{
+  "name": "ShopTrack",
+  "short_name": "ShopTrack",
+  "description": "Theo dõi đơn hàng thông minh SPX, GHN...",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F8F9FA",
+  "theme_color": "#EE4D2D",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
