@@ -93,6 +93,17 @@ export function Notifications({ orders }: NotificationsProps) {
   useEffect(() => {
     if (orders.length === 0) return;
 
+    // Lấy danh sách ID thông báo đã đọc từ localStorage
+    let readIds: string[] = [];
+    try {
+      const saved = localStorage.getItem('read_notification_ids');
+      if (saved) {
+        readIds = JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Lỗi khi đọc danh sách thông báo đã xem:', e);
+    }
+
     // Giả lập thông báo dựa trên lịch sử vận chuyển mới nhất của các đơn hàng
     const newNotifs: NotificationItem[] = [];
     orders.forEach((order) => {
@@ -100,13 +111,14 @@ export function Notifications({ orders }: NotificationsProps) {
         const lastEvent = order.history[order.history.length - 1];
         const statusIcon = STATUS_ICONS[order.normalized_status] || '📦';
         const statusLabel = STATUS_LABELS[order.normalized_status];
+        const notifId = `${order.id}-${order.updated_at}`;
         
         newNotifs.push({
-          id: `${order.id}-${order.updated_at}`,
+          id: notifId,
           title: `Đơn ${order.tracking_code} - ${statusLabel}`,
           body: `${statusIcon} ${lastEvent.description} ${lastEvent.location ? ` tại ${lastEvent.location}` : ''}`,
           time: new Date(order.updated_at),
-          read: false,
+          read: readIds.includes(notifId),
         });
       }
     });
@@ -132,7 +144,37 @@ export function Notifications({ orders }: NotificationsProps) {
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   const markAllAsRead = () => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+    setNotifications((prev) => {
+      const updated = prev.map((n) => ({ ...n, read: true }));
+      
+      let readIds: string[] = [];
+      try {
+        const saved = localStorage.getItem('read_notification_ids');
+        if (saved) {
+          readIds = JSON.parse(saved);
+        }
+      } catch (e) {}
+
+      // Gộp các ID mới đã xem
+      updated.forEach((n) => {
+        if (!readIds.includes(n.id)) {
+          readIds.push(n.id);
+        }
+      });
+
+      // Giới hạn tối đa 50 ID để tránh phình to localStorage
+      if (readIds.length > 50) {
+        readIds = readIds.slice(readIds.length - 50);
+      }
+
+      try {
+        localStorage.setItem('read_notification_ids', JSON.stringify(readIds));
+      } catch (e) {
+        console.error('Lỗi khi lưu danh sách thông báo đã xem:', e);
+      }
+
+      return updated;
+    });
   };
 
   return (
