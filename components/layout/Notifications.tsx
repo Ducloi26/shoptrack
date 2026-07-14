@@ -111,7 +111,7 @@ export function Notifications({ orders }: NotificationsProps) {
         const lastEvent = order.history[order.history.length - 1];
         const statusIcon = STATUS_ICONS[order.normalized_status] || '📦';
         const statusLabel = STATUS_LABELS[order.normalized_status];
-        const notifId = `${order.id}-${order.updated_at}`;
+        const notifId = `${order.id}-${lastEvent.time}`;
         
         newNotifs.push({
           id: notifId,
