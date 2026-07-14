@@ -1,4 +1,4 @@
-import type { CarrierId, NormalizedStatus } from '../../shared/types';
+import type { CarrierId, NormalizedStatus } from '@shared';
 
 // ============================================
 // Re-export từ shared để FE không phải import từ ../../shared
